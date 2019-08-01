@@ -12,7 +12,9 @@
     "sane": "yarn lint && yarn prettify && yarn test",
     "start": "ts-node source/main.ts",
     "watch": "nodemon --watch 'source/**/*.ts' --ignore 'source/**/*.test.ts' --exec 'ts-node' source/main.ts dist/main.js",
-    "build": "tsc"
+    "build": "tsc",
+    "watch:server": "touch dist/index.js && nodemon",
+    "docker:debug": "docker-compose -f docker-compose.dev.yml kill && docker-compose -f docker-compose.dev.yml up --build"
   },
   "dependencies": {
     "apollo-server": "2.5.0",

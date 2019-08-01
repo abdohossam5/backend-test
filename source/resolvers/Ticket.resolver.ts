@@ -1,6 +1,6 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql"
 
-import TicketModel, { Ticket } from "../entities/ticket"
+import TicketModel, { Ticket } from "../entities/Ticket"
 
 import { AddTicketInput, ListTicketsInput, TicketInput } from "./types/Ticket.input"
 

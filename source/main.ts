@@ -9,7 +9,7 @@ import { ObjectIdScalar } from "./objectId.scalar"
 import resolvers from "./resolvers"
 import typegooseMiddleware from "./typegooseMiddleware"
 
-export const MONGODB_URI = "mongodb://localhost:27017/bonsai-backend-test"
+export const MONGODB_URI = "mongodb://mongo:27017/bonsai-backend-test"
 export const PORT = 4000
 
 const main = async () => {

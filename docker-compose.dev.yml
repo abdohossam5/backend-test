@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  mongo:
+    image: mongo:3.6.3
+    command:
+      - --config
+      - /usr/local/etc/mongod.conf
+    volumes:
+      - /data/docker-db:/data/db
+      - ./misc/mongo-docker.conf:/usr/local/etc/mongod.conf
+    ports:
+      - "27018:27017"
+  transpiler:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    command: bash -c "cd /home/node/src/ && tsc -w --outDir dist/"
+    volumes:
+      # container has its own dist directory
+      - dist:/home/node/src/dist
+      # share code with the containers
+      - ./:/home/node/src/
+      # use containers node_modules containers
+      - node_modules:/home/node/src/node_modules
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - NODE_ENV=dev
+    ports:
+      - "3001:3001"
+      - "5859:5859"
+      - "4000:4000"
+    command: npm run watch:server
+    volumes:
+      # container has its own dist directory
+      - dist:/home/node/src/dist
+      # container has its own node_modules directory
+      - node_modules:/home/node/src/node_modules
+volumes:
+  node_modules:
+  dist:
+
