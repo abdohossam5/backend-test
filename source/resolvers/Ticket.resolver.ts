@@ -37,17 +37,24 @@ export class TicketResolver {
     const result:Array<Ticket> = [];
 
     while (hasMore) {
-      const tickets =  await ctx.dataSources.ticketsAPI.getTickets({ skip: count , limit: BATCH_SIZE });
+      let tickets =  await ctx.dataSources.ticketsAPI.getTickets({ skip: count , limit: BATCH_SIZE });
       if (!tickets.length) break;
-      const ops = tickets.map(({ _id, ...t }: { _id: { oid: string, t: Ticket}}) => ({
-          updateOne: {
-            filter: { _id: new ObjectId(_id.oid) },
-            'update':  t,
-            'upsert': true
-        }
-      }));
+
+      // update count and check if has more
       count += tickets.length;
       hasMore = tickets.length === BATCH_SIZE;
+
+      // filter tickets that has at least a title
+      tickets = tickets.filter((t: Ticket) => t.title && t.title !== 'null')
+      
+      // construct bulk ops and upsert to db
+      const ops = tickets.map(({ _id, ...t }: { _id: { $oid: string, t: Ticket } }) => ({
+        updateOne: {
+          filter: { _id: new ObjectId(_id.$oid) },
+          'update': t,
+          'upsert': true
+        }
+      }));
       await TicketModel.bulkWrite(ops);
       result.push(...tickets);
     }
