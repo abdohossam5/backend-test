@@ -5,9 +5,11 @@ import * as path from "path"
 import "reflect-metadata"
 import { buildSchema } from "type-graphql"
 
+import TicketsAPI from './dataSources/TicketsApi'
 import { ObjectIdScalar } from "./objectId.scalar"
 import resolvers from "./resolvers"
 import typegooseMiddleware from "./typegooseMiddleware"
+
 
 export const MONGODB_URI = "mongodb://mongo:27017/bonsai-backend-test"
 export const PORT = 4000
@@ -28,7 +30,13 @@ const main = async () => {
       globalMiddlewares: [typegooseMiddleware],
       scalarsMap: [{ type: ObjectId, scalar: ObjectIdScalar }],
     })
-    const server = new ApolloServer({ schema, context: {} })
+    const server = new ApolloServer({
+      schema,
+      context: {},
+      dataSources: () => ({
+          ticketsAPI: new TicketsAPI()
+      })
+    })
     const { url } = await server.listen(PORT)
     console.log(`GraphQL Playground running at ${url}`)
   } catch (apolloError) {
