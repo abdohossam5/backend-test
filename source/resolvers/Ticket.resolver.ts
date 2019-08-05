@@ -1,8 +1,12 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql"
+import { ObjectId } from "mongodb"
+import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql"
 
 import TicketModel, { Ticket } from "../entities/Ticket"
+import { IGraphQLCustomResolversContext } from '../interfaces'
+import { ObjectIdScalar } from "../objectId.scalar"
 
 import { AddTicketInput, ListTicketsInput, TicketInput } from "./types/Ticket.input"
+
 
 @Resolver(() => Ticket)
 export class TicketResolver {
@@ -23,6 +27,32 @@ export class TicketResolver {
       .sort((a, b) => b.date.getTime() - a.date.getTime())
       .slice(0, input.limit)
     return result
+  }
+
+  @Mutation(() => [Ticket])
+  public async syncTickets(@Ctx() ctx: IGraphQLCustomResolversContext): Promise<Ticket[]> {
+    let hasMore = true;
+    let count = 0;
+    const BATCH_SIZE = 50;
+    const result:Array<Ticket> = [];
+
+    while (hasMore) {
+      const tickets =  await ctx.dataSources.ticketsAPI.getTickets({ skip: count , limit: BATCH_SIZE });
+      if (!tickets.length) break;
+      const ops = tickets.map(({ _id, ...t }: { _id: { oid: string, t: Ticket}}) => ({
+          updateOne: {
+            filter: { _id: new ObjectId(_id.oid) },
+            'update':  t,
+            'upsert': true
+        }
+      }));
+      count += tickets.length;
+      hasMore = tickets.length === BATCH_SIZE;
+      await TicketModel.bulkWrite(ops);
+      result.push(...tickets);
+    }
+    
+    return result;
   }
 
   @Mutation(() => Ticket)

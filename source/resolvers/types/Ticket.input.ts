@@ -33,7 +33,7 @@ export class AddTicketInput implements Partial<Ticket> {
   public inventory: number
 
   @Field()
-  public imageUrl: string
+  public image: string
 
   @Field()
   public date: Date

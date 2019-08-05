@@ -38,7 +38,7 @@ export class Ticket extends Typegoose {
 
   @Field()
   @Property({ required: true })
-  public imageUrl: string
+  public image: string
 
   @Field()
   @Property({ required: true })
