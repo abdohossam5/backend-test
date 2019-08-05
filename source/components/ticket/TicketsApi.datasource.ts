@@ -1,6 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 
-import ObjectHelpers from '../helpers/object';
+import ObjectHelpers from '../../helpers/object';
 
 class TicketsAPI extends RESTDataSource {
   constructor() {

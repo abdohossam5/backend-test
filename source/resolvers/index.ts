@@ -1,3 +1,3 @@
-import { TicketResolver } from "./Ticket.resolver"
+import { TicketResolver } from "../components/ticket/Ticket.resolver"
 
 export default [TicketResolver]

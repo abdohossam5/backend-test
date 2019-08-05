@@ -5,7 +5,7 @@ import * as path from "path"
 import "reflect-metadata"
 import { buildSchema } from "type-graphql"
 
-import TicketsAPI from './dataSources/TicketsApi'
+import TicketsAPI from './components/ticket/TicketsApi.datasource'
 import { ObjectIdScalar } from "./objectId.scalar"
 import resolvers from "./resolvers"
 import typegooseMiddleware from "./typegooseMiddleware"

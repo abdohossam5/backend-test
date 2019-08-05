@@ -1,11 +1,11 @@
 import { ObjectId } from "mongodb"
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql"
 
-import TicketModel, { Ticket } from "../entities/Ticket"
-import { IGraphQLCustomResolversContext } from '../interfaces'
-import { ObjectIdScalar } from "../objectId.scalar"
+import TicketModel, { Ticket } from "./Ticket.entity"
+import { IGraphQLCustomResolversContext } from '../../interfaces'
+import { ObjectIdScalar } from "../../objectId.scalar"
 
-import { AddTicketInput, ListTicketsInput, TicketInput } from "./types/Ticket.input"
+import { AddTicketInput, ListTicketsInput, TicketInput } from "../../resolvers/types/Ticket.input"
 
 
 @Resolver(() => Ticket)
