@@ -1,15 +1,16 @@
 import { ObjectId } from "mongodb"
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql"
 
-import TicketModel, { Ticket } from "./Ticket.entity"
 import { IGraphQLCustomResolversContext } from '../../interfaces'
 import { ObjectIdScalar } from "../../objectId.scalar"
 
-import { AddTicketInput, ListTicketsInput, TicketInput } from "../../resolvers/types/Ticket.input"
+import TicketModel, { Ticket } from "./Ticket.entity"
+import { AddTicketInput, ListTicketsInput, TicketInput } from "./Ticket.input"
+
 
 
 @Resolver(() => Ticket)
-export class TicketResolver {
+export default class TicketResolver {
   @Query(() => Ticket, { nullable: true })
   public async ticket(@Arg("input") ticketInput: TicketInput): Promise<Ticket> {
     const ticket = await TicketModel.findById(ticketInput.id)
