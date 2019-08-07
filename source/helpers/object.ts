@@ -10,10 +10,10 @@ const ObjectHelpers = {
         const value = obj[key];
         if (Array.isArray(value)) {
           value.forEach((itm) => {
-            result += `&${key}=${itm}`;
+            result += `&${key}=${encodeURIComponent(itm)}`;
           });
         } else {
-          result += `&${key}=${value}`;
+          result += `&${key}=${encodeURIComponent(value)}`;
         }
       });
     }
