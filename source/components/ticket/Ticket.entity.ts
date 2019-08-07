@@ -5,11 +5,20 @@ import {
   instanceMethod as InstanceMethod,
   InstanceType,
   ModelType,
+  pre,
   prop as Property,
+  Ref,
   staticMethod as StaticMethod,
   Typegoose,
 } from "typegoose"
 
+import transformGenres from '../../helpers/transformGenres'
+import { Movie } from '../movie/Movie.entity'
+
+@pre<Ticket>('save', function(next) {
+  this.genre = transformGenres(this.genre[0])
+  next()
+})
 @ObjectType()
 export class Ticket extends Typegoose {
   @StaticMethod
@@ -44,13 +53,15 @@ export class Ticket extends Typegoose {
   @Property({ required: true })
   public date: Date
 
+  @Property({ ref: Movie })
+  public movie: Ref<Movie>
+
   @InstanceMethod
   public saveFields(this: InstanceType<Ticket>) {
     // Inventory should always be at least 0
     this.inventory = Math.max(this.inventory || 0, 0)
-    if (this && Math.floor(Math.random() * 6) + 1 === 3) {
-      this.inventory = -1
-    }
+    // transform genres
+    this.genre = transformGenres(this.genre[0])
     return this.save()
   }
 }

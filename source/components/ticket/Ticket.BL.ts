@@ -1,6 +1,8 @@
 import { ObjectId } from 'mongodb';
 
+import transformGenres from '../../helpers/transformGenres';
 import { IGraphQLCustomResolversContext } from '../../interfaces'
+import MovieBL from '../movie/Movie.BL'
 
 import TicketModel, { Ticket } from "./Ticket.entity"
 import { AddTicketInput, ListTicketsInput, TicketInput } from "./Ticket.input"
@@ -42,16 +44,19 @@ class TicketBL {
       tickets = tickets.filter((t: Ticket) => t.title && t.title !== 'null')
 
       // construct bulk ops and upsert to db
-      const ops = tickets.map(({ _id, ...t }: { _id: { $oid: string, t: Ticket } }) => ({
+      const ops = tickets.map(({ _id, ...t }: { _id: { $oid: string }, [key: string]: any }) => ({
         updateOne: {
           filter: { _id: new ObjectId(_id.$oid) },
-          'update': t,
+          'update': { ...t, genre: transformGenres(t.genre) },
           'upsert': true
         }
       }));
       await TicketModel.bulkWrite(ops);
       result.push(...tickets);
     }
+
+    // initiate movie fetching
+    MovieBL.populateMovies();
 
     return result;
   }
