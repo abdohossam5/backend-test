@@ -50,7 +50,7 @@ export class Ticket extends Typegoose {
   public image: string
 
   @Field()
-  @Property({ required: true })
+  @Property({ required: true, index: true })
   public date: Date
 
   @Property({ ref: Movie })

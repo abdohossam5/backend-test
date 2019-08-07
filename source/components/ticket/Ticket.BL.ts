@@ -18,11 +18,16 @@ class TicketBL {
   }
 
   public async listTickets(input: ListTicketsInput): Promise<Ticket[]> {
-    const tickets = await TicketModel.find({})
+    const { cursor, limit } = input;
+
+    if (!('getTime' in cursor) || isNaN(cursor.getTime())) {
+      throw Error('Invalid Date')
+    }
+
+    const tickets = await TicketModel.find({ date: { $lt: cursor} }, null, { limit })
+
     const result = tickets
-      .filter(ticket => ticket.date.getTime() < input.cursor.getTime())
       .sort((a, b) => b.date.getTime() - a.date.getTime())
-      .slice(0, input.limit)
     return result
   }
 
