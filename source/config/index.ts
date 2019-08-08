@@ -17,6 +17,7 @@ const ENV_POSTFIX:IEnvPostfixObject = {
 const env = process.env.NODE_ENV && Object.keys(ENV_POSTFIX).includes(process.env.NODE_ENV)
   ? ENV_POSTFIX[process.env.NODE_ENV]
   : 'dev';
+/* tslint:disable-next-line */
 const config = require(path.join(__dirname, `config-${env}`)).default;
 
 export default config;
