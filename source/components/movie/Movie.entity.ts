@@ -2,8 +2,6 @@ import { ObjectId } from "mongodb"
 import { Field, Float, Int, ObjectType } from "type-graphql"
 import {
   arrayProp as ArrayProperty,
-  instanceMethod as InstanceMethod,
-  InstanceType,
   ModelType,
   pre,
   prop as Property,
@@ -42,23 +40,23 @@ export class Movie extends Typegoose {
   public title: string
 
   @Field()
-  @Property({ required: true })
-  public year: string
+  @Property({ })
+  public year: number
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public rated: string
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public released: Date
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public runtime: string
   
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public director: string
 
   @Field(() => [String])
@@ -70,23 +68,23 @@ export class Movie extends Typegoose {
   public actors: string[]
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public plot: string
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public language: string
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public country: string
   
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public awards: string
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public poster: string
 
   @Field(() => [Rating])
@@ -94,35 +92,35 @@ export class Movie extends Typegoose {
   public ratings: { source: string, value: string }[]
 
   @Field(() => Float)
-  @Property({ required: true })
+  @Property({ })
   public metascore: number
 
   @Field(() => Float)
-  @Property({ required: true })
+  @Property({ })
   public imdbRating: number
 
   @Field(() => Int)
-  @Property({ required: true })
+  @Property({ })
   public imdbVotes: number
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public imdbID: string
   
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public dvd: string
 
-  @Field()
-  @Property({ required: true })
-  public boxOffice: string
+  @Field(() => Float)
+  @Property({ })
+  public boxOffice: number
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public production: string
 
   @Field()
-  @Property({ required: true })
+  @Property({ })
   public website: string
 }
 
