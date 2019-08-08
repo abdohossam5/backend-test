@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb"
 import { Field, Float, InputType, Int } from "type-graphql"
 
-import { Ticket } from "../../entities/Ticket"
+import { Ticket } from "./Ticket.entity"
 
 @InputType()
 export class TicketInput {
@@ -33,7 +33,7 @@ export class AddTicketInput implements Partial<Ticket> {
   public inventory: number
 
   @Field()
-  public imageUrl: string
+  public image: string
 
   @Field()
   public date: Date

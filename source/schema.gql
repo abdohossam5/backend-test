@@ -8,7 +8,7 @@ input AddTicketInput {
   genre: [String!]!
   price: Float!
   inventory: Int!
-  imageUrl: String!
+  image: String!
   date: DateTime!
 }
 
@@ -22,7 +22,34 @@ input ListTicketsInput {
   limit: Int!
 }
 
+type Movie {
+  _id: ObjectId!
+  title: String!
+  year: Float!
+  rated: String!
+  released: DateTime!
+  runtime: String!
+  director: String!
+  writer: [String!]!
+  actors: [String!]!
+  plot: String!
+  language: String!
+  country: String!
+  awards: String!
+  poster: String!
+  ratings: [Rating!]!
+  metascore: Float!
+  imdbRating: Float!
+  imdbVotes: Int!
+  imdbID: String!
+  dvd: String!
+  boxOffice: Float!
+  production: String!
+  website: String!
+}
+
 type Mutation {
+  syncTickets: [Ticket!]!
   addTicket(input: AddTicketInput!): Ticket!
 }
 
@@ -34,13 +61,18 @@ type Query {
   listTickets(input: ListTicketsInput!): [Ticket!]!
 }
 
+type Rating {
+  source: String!
+  value: String!
+}
+
 type Ticket {
   _id: ObjectId!
   title: String!
   genre: [String!]!
   price: Float!
   inventory: Int!
-  imageUrl: String!
+  image: String!
   date: DateTime!
 }
 
