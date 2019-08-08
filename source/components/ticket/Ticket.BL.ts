@@ -24,7 +24,7 @@ class TicketBL {
       throw Error('Invalid Date')
     }
 
-    const tickets = await TicketModel.find({ date: { $lt: cursor} }, null, { limit })
+    const tickets = await TicketModel.find({ date: { $lt: cursor} }, null, { limit }).populate('movie')
 
     const result = tickets
       .sort((a, b) => b.date.getTime() - a.date.getTime())
