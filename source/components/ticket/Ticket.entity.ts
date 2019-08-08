@@ -49,6 +49,7 @@ export class Ticket extends Typegoose {
   @Property({ required: true, index: true })
   public date: Date
 
+  @Field(() => Movie)
   @Property({ ref: Movie })
   public movie: Ref<Movie>
 
