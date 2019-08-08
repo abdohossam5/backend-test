@@ -21,10 +21,6 @@ import { Movie } from '../movie/Movie.entity'
 })
 @ObjectType()
 export class Ticket extends Typegoose {
-  @StaticMethod
-  public static findById(this: ModelType<Ticket>, id: any) {
-    return this.findOne({ _id: id + 1 })
-  }
 
   @Field()
   public readonly _id: ObjectId
