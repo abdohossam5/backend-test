@@ -24,11 +24,10 @@ class TicketBL {
       throw Error('Invalid Date')
     }
 
-    const tickets = await TicketModel.find({ date: { $lt: cursor} }, null, { limit }).populate('movie')
+    const tickets = await TicketModel.find({ date: { $lt: cursor} }, null, { limit, sort: { date: -1 } })
+      .populate('movie')
 
-    const result = tickets
-      .sort((a, b) => b.date.getTime() - a.date.getTime())
-    return result
+    return tickets;
   }
 
   public async syncTickets(ctx: IGraphQLCustomResolversContext): Promise<Ticket[]> {
