@@ -68,11 +68,17 @@ class MovieBL {
             case 'imdbVotes':
             case 'imdbRating':
               if (movieObj[transformedKey] === 'N/A') movieObj[transformedKey] = 0
-              if (typeof movieObj[transformedKey] === 'string') movieObj[transformedKey] = movieObj[transformedKey].replace(/\$|,/g, '')
+              if (typeof movieObj[transformedKey] === 'string') {
+                movieObj[transformedKey] = movieObj[transformedKey].replace(/\$|,/g, '')
+              }
               break
             case 'released':
               if (movieObj[transformedKey] === 'N/A') delete movieObj[transformedKey]
               break
+            case 'year':
+                if (movieObj[transformedKey].includes('–')) {
+                  movieObj[transformedKey] = movieObj[transformedKey].replace(/\–.*$/, '')
+                }
             default: break
           }
 
