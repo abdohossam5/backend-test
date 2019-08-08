@@ -13,6 +13,7 @@
       "restart": true,
       "localRoot": "${workspaceFolder}/dist",
       "remoteRoot": "/home/node/src/dist",
+      "timeout": 100000
     }
   ]
 }
