@@ -30,6 +30,23 @@ class TicketBL {
     return tickets;
   }
 
+  public async listNoMovieTickets(input: ListTicketsInput): Promise<Ticket[]> {
+    const { cursor, limit } = input;
+
+    if (!('getTime' in cursor) || isNaN(cursor.getTime())) {
+      throw Error('Invalid Date')
+    }
+
+    const tickets = await TicketModel.find(
+      { date: { $lt: cursor}, movie: { $exists: false } },
+      null,
+      { sort: { date: -1 }, limit }
+    )
+
+    const result = tickets
+    return result
+  }
+
   public async syncTickets(ctx: IGraphQLCustomResolversContext): Promise<Ticket[]> {
     let hasMore = true;
     let count = 0;

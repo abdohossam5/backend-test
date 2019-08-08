@@ -20,6 +20,11 @@ export default class TicketResolver {
     return TicketBL.listTickets(input)
   }
 
+  @Query(() => [Ticket])
+  public async listNoMovieTickets(@Arg("input") input: ListTicketsInput): Promise<Ticket[]> {
+    return TicketBL.listNoMovieTickets(input)
+  }
+
   @Mutation(() => [Ticket])
   public async syncTickets(@Ctx() ctx: IGraphQLCustomResolversContext): Promise<Ticket[]> {
     return TicketBL.syncTickets(ctx)
