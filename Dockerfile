@@ -25,7 +25,7 @@ RUN npm install -qy
 
 
 COPY --chown=node:node ./ ./
-EXPOSE 3001
+EXPOSE 4000
 
 # run app
 CMD [ "node", "dist/index.js"]

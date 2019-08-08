@@ -27,9 +27,8 @@ services:
       context: .
       dockerfile: ./Dockerfile
       args:
-        - NODE_ENV=dev
+        - NODE_ENV=dockerDebug
     ports:
-      - "3001:3001"
       - "5859:5859"
       - "4000:4000"
     command: npm run watch:server
