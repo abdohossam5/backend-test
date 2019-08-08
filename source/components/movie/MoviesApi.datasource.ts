@@ -4,7 +4,8 @@ import ObjectHelpers from '../../helpers/object'
 import { IMoviesDataSource } from '../../interfaces'
 
 class TicketsAPI extends RESTDataSource implements IMoviesDataSource {
-  private apiKey = '3b4ea366';
+  // private apiKey = '3b4ea366';
+  private apiKey = '29e3395c';
   constructor() {
     super();
     this.baseURL = `http://www.omdbapi.com/`
@@ -16,7 +17,7 @@ class TicketsAPI extends RESTDataSource implements IMoviesDataSource {
   }
 
   public async searchMovies(query: { t: string, y?: string }) {
-    const path = `?type=movie&${ObjectHelpers.convertObjectToQueryString(query)}`;
+    const path = `?${ObjectHelpers.convertObjectToQueryString(query)}`;
     let result = null;
     try {
       result = await this.get(path);
