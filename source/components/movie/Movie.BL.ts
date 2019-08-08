@@ -13,7 +13,7 @@ class MovieBL {
     // remove brackets
     cleanedTitle = t.replace(/\(|\)/g, '');
     // fix articles position (ex. Dark Knight Rises, The => The Dark Knight Rises)
-    const articlesPattern = /(?:(, the$|, a$|, an$|, la$, le$))/i
+    const articlesPattern = /(?:(, the$|, a$|, an$|, la$|, le$))/i
     const hasArticle = cleanedTitle.match(articlesPattern)
     if (hasArticle && hasArticle.length) {
       cleanedTitle = cleanedTitle.replace(articlesPattern, '');
@@ -32,7 +32,6 @@ class MovieBL {
     const cleanedAlternativeTitles = matches
     .map((alternativeTitle:string) => MovieBL.cleanMovieTitle(alternativeTitle))
     possibleTitles.push(...(cleanedAlternativeTitles))
-    console.log(possibleTitles);
     return possibleTitles;
   }
   
